@@ -43,6 +43,11 @@
         <div class="btn" @click="getData">走你!~</div>
       </div>
     </div>
+
+    <!-- loading -->
+    <div class="loading_wrap" v-if="showLoading">
+      <div class="loading"></div>
+    </div>
   </div>
 </template>
 
@@ -64,16 +69,51 @@ export default {
       bitfinex_apisecret: '',
       bigone_apikey: '',
       param:{},
+      showLoading:false
     }
   },
   methods:{
     setParame(){
-      
+      this.param={
+        other_bl:this.other_bl,
+        addresses:this.addresses,
+      };
+      if(this.bittrex_apikey){
+        this.param.bittrex_apikey=this.bittrex_apikey
+      };
+      if(this.bittrex_apisecret){
+        this.param.bittrex_apisecret=this.bittrex_apisecret
+      };
+      if(this.poloniex_apisecret){
+        this.param.poloniex_apisecret=this.poloniex_apisecret
+      };
+      if(this.poloniex_apisecret){
+        this.param.poloniex_apisecret=this.poloniex_apisecret
+      };
+      if(this.bitfinex_apikey){
+        this.param.bitfinex_apikey=this.bitfinex_apikey
+      };
+      if(this.bitfinex_apisecret){
+        this.param.bitfinex_apisecret=this.bitfinex_apisecret
+      };
+      if(this.bigone_apikey){
+        this.param.bigone_apikey=this.bigone_apikey
+      };
     },
     getData(){
-      console.log('click');
-      $.post("http://192.168.0.87:5050",{test:'test'},function(result){
-        console.log(result);
+      this.setParame();
+      console.log(this.param);
+      this.showLoading=true;
+      $.post("http://192.168.0.87:5050",this.param,(result)=>{
+        if(result){
+          console.log(result);
+          this.showLoading=false;
+          localStorage.setItem('data',JSON.stringify(result));
+          this.goHome();
+        }else{
+          this.showLoading=false;
+          alert("something wrong!");
+        }
       });
     },
     goHome(){
@@ -128,6 +168,8 @@ export default {
         height: 36px;
         border: none;
         border-radius: 3px;
+        padding: 0 10px;
+        box-sizing: border-box;
       }
       .btn{
         width: 100px;
@@ -142,6 +184,26 @@ export default {
         cursor: pointer;
       }
     }
+  }
+  .loading_wrap{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right:0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    .loading{
+      width: 64px;
+      height: 64px;
+      background: url('../assets/loading.gif') 0 0 no-repeat;
+      background-size: cover;
+      position: absolute;
+      left: 50%;
+      top:50%;
+      margin-top: -32px;
+      margin-left: -32px;
+    }
+    
   }
 }
 </style>
