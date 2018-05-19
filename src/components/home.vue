@@ -1,6 +1,9 @@
 <template>
   <div class="home_wrap">
-    <div class="navBar">Oh My Coins!</div>
+    <div class="navBar">
+      <span class="logo"></span>
+      Oh My Coins!
+    </div>
     <!-- 基本信息 -->
     <div class="block">
       <h1 class="title">持仓信息</h1>
@@ -83,6 +86,9 @@ export default {
     setData(){
       this.tableData=this.data.Table;
       this.cloudData=this.data.Cloud;
+      this.cloudData.forEach((item,index)=>{
+        item.weight=item.weight*10;
+      });
       this.pieData=this.data.Pie;
       this.chartsData=this.data.Charts;
       this.btcxs=this.chartsData.BTC[2];
@@ -336,13 +342,27 @@ export default {
 .home_wrap{
   width: 100%;
   .navBar{
+    display: flex;
+    justify-content: center;
     width: 100%;
     height: 60px;
-    background: white;
+    background: rgba(255,255,255,.8);
     box-shadow: rgba(0,0,0,0.2) 0px 1px 12px;
     text-align: center;
     font-size: 24px;
+    font-weight: bold;
     line-height: 60px;
+    .logo{
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: url('../assets/bitcoin.png') 0 0 no-repeat;
+      background-size: cover;
+      margin-right:10px;
+      position: relative;
+      top: 10px;
+      // margin-top: 10px;
+    }
   }
   .block{
     width: 1000px;
@@ -363,7 +383,7 @@ export default {
     //持仓信息表格
     .table_wrap{
       float: left;
-      width: 50%;
+      width: 55%;
       height: 500px;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -390,7 +410,7 @@ export default {
     }
     //右侧内容
     .base_right{
-      width: 50%;
+      width: 45%;
       box-sizing: border-box;
       padding: 0 20px;
       float: left;
@@ -446,7 +466,7 @@ export default {
         color:#59718a;
       }
       .word_cloud{
-        width: 500px;
+        width: 800px;
         height: 300px;
         margin: 0 auto;
       }
