@@ -1,6 +1,6 @@
 # ohmycoins
 
-> A Vue.js project
+> 这边是所有的前端页面，后端的爬虫及数据处理[戳这里👇](https://github.com/Lavande/OhMyCoins2)
 
 ## Build Setup
 
